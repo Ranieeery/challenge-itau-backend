@@ -1,32 +1,31 @@
-FROM amazoncorretto:24-alpine
+FROM amazoncorretto:24-alpine AS builder
 
-RUN apk add --no-cache bash openssh-client
-
-LABEL org.opencontainers.image.title="Itau Backend"
-LABEL org.opencontainers.image.description="Backend application for Itau project"
-
-ENV MAVEN_HOME=/usr/share/maven
-
-COPY --from=maven:3.9.9-amazoncorretto-21 ${MAVEN_HOME} ${MAVEN_HOME}
-COPY --from=maven:3.9.9-amazoncorretto-21 /usr/local/bin/mvn-entrypoint.sh /usr/local/bin/mvn-entrypoint.sh
-COPY --from=maven:3.9.9-amazoncorretto-21 /usr/share/maven/ref/settings-docker.xml /usr/share/maven/ref/settings-docker.xml
-
-RUN ln -s ${MAVEN_HOME}/bin/mvn /usr/bin/mvn
-
-ARG MAVEN_VERSION=3.9.9
-ARG USER_HOME_DIR="/root"
-ENV MAVEN_CONFIG="$USER_HOME_DIR/.m2"
+RUN apk add --no-cache maven
 
 WORKDIR /app
 
 COPY pom.xml .
-
 RUN mvn dependency:go-offline -B
 
 COPY src ./src
-
 RUN mvn clean package -DskipTests
+
+FROM amazoncorretto:24-alpine
+
+RUN addgroup -g 1001 -S appgroup && \
+    adduser -u 1001 -S appuser -G appgroup
+
+WORKDIR /app
+
+COPY --from=builder /app/target/*.jar app.jar
+
+RUN chown -R appuser:appgroup /app
+
+USER appuser
 
 EXPOSE 8080
 
-CMD ["mvn", "spring-boot:run"]
+HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:8080/actuator/health || exit 1
+
+CMD ["java", "-jar", "app.jar"]
