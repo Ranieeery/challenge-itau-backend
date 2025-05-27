@@ -5,8 +5,8 @@ import java.time.OffsetDateTime;
 
 public class Transaction {
 
-    private BigDecimal valor;
-    private OffsetDateTime dataHora;
+    private final BigDecimal valor;
+    private final OffsetDateTime dataHora;
 
     public Transaction(BigDecimal valor, OffsetDateTime dataHora) {
         this.valor = valor;

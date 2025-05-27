@@ -1,6 +1,6 @@
 services:
   itau-backend:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
     container_name: itau-backend-app
@@ -15,7 +15,7 @@ services:
     volumes:
       - ./logs:/app/logs
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
       interval: 30s
       timeout: 10s
       retries: 3
