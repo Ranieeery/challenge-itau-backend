@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -28,17 +28,17 @@
 
     <springProfile name="!docker">
         <root level="INFO">
-            <appender-ref ref="CONSOLE" />
-            <appender-ref ref="FILE" />
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="FILE"/>
         </root>
-        <logger name="challenge.dev.raniery.itaubackend" level="DEBUG" />
+        <logger name="challenge.dev.raniery.itaubackend" level="DEBUG"/>
     </springProfile>
     <springProfile name="docker">
         <root level="INFO">
-            <appender-ref ref="CONSOLE" />
-            <appender-ref ref="FILE" />
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="FILE"/>
         </root>
-        <logger name="challenge.dev.raniery.itaubackend" level="INFO" />
+        <logger name="challenge.dev.raniery.itaubackend" level="INFO"/>
     </springProfile>
 
 </configuration>

@@ -35,8 +35,8 @@ public interface TransactionControllerInterface {
             content = @Content
         )
     })
-    ResponseEntity<Void> createTransaction(@RequestBody @Valid TransactionRequest request);    
-    
+    ResponseEntity<Void> createTransaction(@RequestBody @Valid TransactionRequest request);
+
     @Operation(
         summary = "Delete Transactions",
         description = "Deletes all transactions from the system"
