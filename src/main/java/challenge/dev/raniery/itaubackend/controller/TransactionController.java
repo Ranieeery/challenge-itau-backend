@@ -32,7 +32,7 @@ public class TransactionController implements TransactionControllerInterface {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteTransaction(@RequestBody @Valid TransactionRequest request) {
+    public ResponseEntity<Void> deleteTransactions() {
         transacaoService.clearTransactions();
         return ResponseEntity.ok().build();
     }

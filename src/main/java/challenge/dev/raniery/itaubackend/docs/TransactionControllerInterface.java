@@ -35,16 +35,16 @@ public interface TransactionControllerInterface {
             content = @Content
         )
     })
-    ResponseEntity<Void> createTransaction(@RequestBody @Valid TransactionRequest request);
-
+    ResponseEntity<Void> createTransaction(@RequestBody @Valid TransactionRequest request);    
+    
     @Operation(
         summary = "Delete Transactions",
-        description = "Deletes transactions from the system"
+        description = "Deletes all transactions from the system"
     )
     @ApiResponse(
         responseCode = "200",
-        description = "Transactions deleted successfully",
-        content = @Content(schema = @Schema(implementation = TransactionRequest.class))
+        description = "All transactions deleted successfully",
+        content = @Content
     )
-    ResponseEntity<Void> deleteTransaction(@RequestBody @Valid TransactionRequest request);
+    ResponseEntity<Void> deleteTransactions();
 }

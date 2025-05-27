@@ -12,10 +12,10 @@ public class StatisticResponse {
 
     public StatisticResponse(DoubleSummaryStatistics stats) {
         this.count = stats.getCount();
-        this.sum = stats.getSum();
-        this.avg = stats.getAverage();
-        this.min = stats.getMin();
-        this.max = stats.getMax();
+        this.sum = stats.getCount() == 0 ? 0.0 : stats.getSum();
+        this.avg = stats.getCount() == 0 ? 0.0 : stats.getAverage();
+        this.min = stats.getCount() == 0 ? 0.0 : stats.getMin();
+        this.max = stats.getCount() == 0 ? 0.0 : stats.getMax();
     }
 
     public long getCount() {
