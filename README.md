@@ -6,18 +6,18 @@
 [![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://www.docker.com/)
 [![Tests](https://img.shields.io/badge/Tests-✅%2056%20Passed-green.svg)](#testes)
 
-API REST desenvolvida em **Java 24** com **Spring Boot 3.5** para o desafio técnico do Itaú Unibanco. Sistema de gerenciamento de transações financeiras com cálculo de estatísticas em tempo real.
+API REST desenvolvida em **Java 24** com **Spring Boot 3.5** para o desafio técnico do Itaú Unibanco. Consiste em um sistema de gerenciamento de transações financeiras com cálculo de estatísticas em tempo real.
 
 ## 📋 Descrição do Desafio
 
 Esta API implementa um sistema de transações que:
 
-- ✅ **Recebe transações** com validação completa
-- ✅ **Calcula estatísticas** dos últimos 60 segundos em tempo real
-- ✅ **Limpa dados** quando necessário
-- ✅ **Armazena em memória** (sem banco de dados)
-- ✅ **Thread-safe** para operações concorrentes
-- ✅ **Logs estruturados** com AspectJ
+- **Recebe transações** com validação completa
+- **Calcula estatísticas** dos últimos 60 segundos em tempo real
+- **Limpa dados** quando necessário
+- **Armazena em memória** (sem banco de dados)
+- **Thread-safe** para operações concorrentes
+- **Logs estruturados** com AspectJ
 
 > **Fonte do Desafio**: [feltex/desafio-itau-backend](https://github.com/feltex/desafio-itau-backend)
 
@@ -263,16 +263,16 @@ curl -X DELETE http://localhost:8080/transacao
 - **Logs estruturados** com tempo de execução
 - **Rastreamento** de todas as operações
 - **Estatísticas** calculadas em tempo real
-- ⚡ **Performance** monitorada via aspectos
+- **Performance** monitorada via aspectos
 
 ## 🧩 Arquitetura
 
 ### Princípios SOLID
-- ✅ **Single Responsibility** - Cada classe tem uma responsabilidade
-- ✅ **Open/Closed** - Extensível via interfaces
-- ✅ **Liskov Substitution** - Implementações substituíveis
-- ✅ **Interface Segregation** - Interfaces específicas
-- ✅ **Dependency Inversion** - Dependências abstratas
+- **Single Responsibility** - Cada classe tem uma responsabilidade
+- **Open/Closed** - Extensível via interfaces
+- **Liskov Substitution** - Implementações substituíveis
+- **Interface Segregation** - Interfaces específicas
+- **Dependency Inversion** - Dependências abstratas
 
 ---
 
