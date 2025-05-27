@@ -23,7 +23,6 @@ public class TransactionController implements TransactionControllerInterface {
 
     @PostMapping
     public ResponseEntity<Void> createTransaction(@RequestBody @Valid TransactionRequest request) {
-
         if (request.dataHora().isAfter(OffsetDateTime.now())) {
             return ResponseEntity.unprocessableEntity().build();
         }
@@ -34,7 +33,6 @@ public class TransactionController implements TransactionControllerInterface {
 
     @DeleteMapping
     public ResponseEntity<Void> deleteTransaction(@RequestBody @Valid TransactionRequest request) {
-
         transacaoService.clearTransactions();
         return ResponseEntity.ok().build();
     }

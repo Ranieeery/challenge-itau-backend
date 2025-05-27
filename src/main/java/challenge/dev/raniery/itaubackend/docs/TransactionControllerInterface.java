@@ -35,7 +35,7 @@ public interface TransactionControllerInterface {
             content = @Content
         )
     })
-    public ResponseEntity<Void> createTransaction(@RequestBody @Valid TransactionRequest request);
+    ResponseEntity<Void> createTransaction(@RequestBody @Valid TransactionRequest request);
 
     @Operation(
         summary = "Delete Transactions",
@@ -46,5 +46,5 @@ public interface TransactionControllerInterface {
         description = "Transactions deleted successfully",
         content = @Content(schema = @Schema(implementation = TransactionRequest.class))
     )
-    public ResponseEntity<Void> deleteTransaction(@RequestBody @Valid TransactionRequest request);
+    ResponseEntity<Void> deleteTransaction(@RequestBody @Valid TransactionRequest request);
 }

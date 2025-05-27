@@ -20,5 +20,5 @@ public interface StatisticControllerInterface {
         description = "Returns the statistics of the application in the last 60 seconds",
         content = @Content(schema = @Schema(implementation = StatisticResponse.class))
     )
-    public ResponseEntity<StatisticResponse> getStatistic();
+    ResponseEntity<StatisticResponse> getStatistic();
 }
