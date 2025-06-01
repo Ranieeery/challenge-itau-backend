@@ -1,4 +1,4 @@
-# 🏦 Itaú Backend Challenge - API REST de Transações
+# Itaú Backend Challenge - API REST de Transações
 
 [![Java](https://img.shields.io/badge/Java-24-orange.svg)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.0-brightgreen.svg)](https://spring.io/projects/spring-boot)
@@ -8,7 +8,7 @@
 
 API REST desenvolvida em **Java 24** com **Spring Boot 3.5** para o desafio técnico do Itaú Unibanco. Consiste em um sistema de gerenciamento de transações financeiras com cálculo de estatísticas em tempo real.
 
-## 📋 Descrição do Desafio
+## Descrição do Desafio
 
 Esta API implementa um sistema de transações que:
 
@@ -17,13 +17,14 @@ Esta API implementa um sistema de transações que:
 - **Limpa dados** quando necessário
 - **Armazena em memória** (sem banco de dados)
 - **Thread-safe** para operações concorrentes
-- **Logs estruturados** com AspectJ
+- **Logs estruturados** com AspectJ e Spring AOP
+- **Documentação** via OpenAPI/Swagger
 
 > **Fonte do Desafio**: [feltex/desafio-itau-backend](https://github.com/feltex/desafio-itau-backend)
 
-## 🎯 Endpoints da API
+## Endpoints da API
 
-### 📤 **POST** `/transacao` - Criar Transação
+### **POST** `/transacao` - Criar Transação
 
 Cria uma nova transação no sistema.
 
@@ -45,14 +46,14 @@ Cria uma nova transação no sistema.
 - ✅ `dataHora` não pode ser no futuro
 - ✅ Ambos os campos são obrigatórios
 
-### 🗑️ **DELETE** `/transacao` - Limpar Transações
+### **DELETE** `/transacao` - Limpar Transações
 
 Remove todas as transações do sistema.
 
 **Resposta:**
 - `200 OK` - Todas as transações foram removidas
 
-### 📊 **GET** `/estatistica` - Obter Estatísticas
+### **GET** `/estatistica` - Obter Estatísticas
 
 Retorna estatísticas das transações dos últimos 60 segundos.
 
@@ -70,7 +71,7 @@ Retorna estatísticas das transações dos últimos 60 segundos.
 - `200 OK` - Sempre retorna estatísticas
 - Quando não há transações nos últimos 60s, todos os valores são `0.0`
 
-## 🚀 Como Executar
+## Como Executar
 
 ### Pré-requisitos
 
@@ -78,7 +79,7 @@ Retorna estatísticas das transações dos últimos 60 segundos.
 - **Maven 3.9+**
 - **Docker** (opcional)
 
-### 1️⃣ Execução Local
+### Execução Local
 
 ```bash
 # Clonar o repositório
@@ -94,7 +95,7 @@ mvn spring-boot:run
 
 A API estará disponível em: **http://localhost:8080**
 
-### 2️⃣ Execução com Docker
+### Execução com Docker
 
 ```bash
 # Build e execução com docker-compose
@@ -104,17 +105,7 @@ docker-compose up -d
 docker-compose logs -f
 ```
 
-### 3️⃣ Build para Produção
-
-```bash
-# Gerar JAR executável
-mvn clean package
-
-# Executar JAR
-java -jar target/itau-backend-0.0.1-SNAPSHOT.jar
-```
-
-## 🧪 Testes
+## Testes
 
 ### Execução dos Testes
 
@@ -146,7 +137,7 @@ mvn test -Dmaven.test.failure.ignore=true
 go run load-test.go
 ```
 
-## 📁 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
 ├── src/main/java/
@@ -164,7 +155,7 @@ go run load-test.go
 └── README.md              # This file
 ```
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 ### Core Stack
 - **Java 24**
@@ -191,7 +182,7 @@ go run load-test.go
 - **Aspect-oriented logging**
 - **Real-time statistics**
 
-## 📖 Documentação da API
+## Documentação da API
 
 ### Swagger/OpenAPI
 
@@ -219,7 +210,7 @@ curl http://localhost:8080/estatistica
 curl -X DELETE http://localhost:8080/transacao
 ```
 
-## 🔧 Configurações
+## Configurações
 
 ### Profiles do Spring
 
@@ -238,9 +229,9 @@ curl -X DELETE http://localhost:8080/transacao
 - **Concurrency**: Thread-safe para alta concorrência
 - **GC**: Otimizado para baixa latência
 
-## 🎯 Funcionalidades Extras
+## Funcionalidades Extras
 
-### ✅ Implementadas
+### Implementadas
 
 1. **Testes Automatizados** - 56 testes unitários e integração
 2. **Containerização** - Docker + Docker Compose
@@ -251,21 +242,21 @@ curl -X DELETE http://localhost:8080/transacao
 7. **Documentação da API** - OpenAPI/Swagger
 8. **Documentação do Sistema** - README completo
 
-### 🔄 Concorrência e Thread Safety
+### Concorrência e Thread Safety
 
 - [x] `ConcurrentLinkedQueue` para armazenamento thread-safe
 - [x] Operações atômicas para estatísticas
 - [x] Testes de concorrência validados
 - [x] Sem race conditions identificadas
 
-### 📊 Métricas e Observabilidade
+### Métricas e Observabilidade
 
 - **Logs estruturados** com tempo de execução
 - **Rastreamento** de todas as operações
 - **Estatísticas** calculadas em tempo real
 - **Performance** monitorada via aspectos
 
-## 🧩 Arquitetura
+## Arquitetura
 
 ### Princípios SOLID
 - **Single Responsibility** - Cada classe tem uma responsabilidade
