@@ -12,9 +12,9 @@ import (
 )
 
 const (
-	baseURL = "http://localhost:8080"
+	baseURL      = "http://localhost:8080"
 	testDuration = 1 * time.Minute
-	targetRPS = 1000
+	targetRPS    = 1000
 )
 
 type TransactionRequest struct {
@@ -23,12 +23,12 @@ type TransactionRequest struct {
 }
 
 type Stats struct {
-	TotalRequests    int64
-	SuccessRequests  int64
-	FailedRequests   int64
-	CreateRequests   int64
-	DeleteRequests   int64
-	StatRequests     int64
+	TotalRequests   int64
+	SuccessRequests int64
+	FailedRequests  int64
+	CreateRequests  int64
+	DeleteRequests  int64
+	StatRequests    int64
 }
 
 func main() {
@@ -44,7 +44,7 @@ func main() {
 
 	stats := &Stats{}
 	var wg sync.WaitGroup
-	
+
 	ticker := time.NewTicker(time.Second / time.Duration(targetRPS))
 	defer ticker.Stop()
 
@@ -76,7 +76,7 @@ func main() {
 finished:
 	ticker.Stop()
 	wg.Wait()
-	
+
 	duration := time.Since(startTime)
 	printFinalStats(stats, duration)
 }
@@ -93,9 +93,9 @@ func checkAPIHealth() bool {
 
 func makeRandomRequest(stats *Stats) {
 	atomic.AddInt64(&stats.TotalRequests, 1)
-	
+
 	randNum := rand.Intn(100)
-	
+
 	var success bool
 	if randNum < 70 {
 		success = createTransaction(stats)
@@ -107,7 +107,7 @@ func makeRandomRequest(stats *Stats) {
 		success = deleteTransactions(stats)
 		atomic.AddInt64(&stats.DeleteRequests, 1)
 	}
-	
+
 	if success {
 		atomic.AddInt64(&stats.SuccessRequests, 1)
 	} else {
@@ -121,19 +121,19 @@ func createTransaction(stats *Stats) bool {
 		Valor:    rand.Float64() * 1000,
 		DataHora: time.Now().Add(-time.Duration(rand.Intn(60)) * time.Second),
 	}
-	
+
 	jsonData, err := json.Marshal(transaction)
 	if err != nil {
 		return false
 	}
-	
+
 	client := &http.Client{Timeout: 10 * time.Second}
 	resp, err := client.Post(baseURL+"/transacao", "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		return false
 	}
 	defer resp.Body.Close()
-	
+
 	return resp.StatusCode == 201
 }
 
@@ -144,7 +144,7 @@ func getStatistics(stats *Stats) bool {
 		return false
 	}
 	defer resp.Body.Close()
-	
+
 	return resp.StatusCode == 200
 }
 
@@ -154,20 +154,20 @@ func deleteTransactions(stats *Stats) bool {
 	if err != nil {
 		return false
 	}
-	
+
 	resp, err := client.Do(req)
 	if err != nil {
 		return false
 	}
 	defer resp.Body.Close()
-	
+
 	return resp.StatusCode == 204
 }
 
 func showRealTimeStats(stats *Stats) {
 	ticker := time.NewTicker(5 * time.Second)
 	defer ticker.Stop()
-	
+
 	for range ticker.C {
 		total := atomic.LoadInt64(&stats.TotalRequests)
 		success := atomic.LoadInt64(&stats.SuccessRequests)
@@ -175,7 +175,7 @@ func showRealTimeStats(stats *Stats) {
 		creates := atomic.LoadInt64(&stats.CreateRequests)
 		deletes := atomic.LoadInt64(&stats.DeleteRequests)
 		statReqs := atomic.LoadInt64(&stats.StatRequests)
-		
+
 		if total > 0 {
 			successRate := float64(success) / float64(total) * 100
 			fmt.Printf("📈 Total: %d | ✅ Success: %d (%.1f%%) | ❌ Failed: %d | POST: %d | GET: %d | DELETE: %d\n",
@@ -191,7 +191,7 @@ func printFinalStats(stats *Stats, duration time.Duration) {
 	creates := atomic.LoadInt64(&stats.CreateRequests)
 	deletes := atomic.LoadInt64(&stats.DeleteRequests)
 	statReqs := atomic.LoadInt64(&stats.StatRequests)
-	
+
 	fmt.Println("\n" + "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 	fmt.Println("🏁 RESULTADOS FINAIS DO LOAD TEST")
 	fmt.Println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
@@ -199,14 +199,14 @@ func printFinalStats(stats *Stats, duration time.Duration) {
 	fmt.Printf("📊 Total de Requisições: %d\n", total)
 	fmt.Printf("✅ Requisições Bem-sucedidas: %d\n", success)
 	fmt.Printf("❌ Requisições Falharam: %d\n", failed)
-	
+
 	if total > 0 {
 		successRate := float64(success) / float64(total) * 100
 		avgRPS := float64(total) / duration.Seconds()
 		fmt.Printf("📈 Taxa de Sucesso: %.2f%%\n", successRate)
 		fmt.Printf("🚀 RPS Médio: %.2f req/s\n", avgRPS)
 	}
-	
+
 	fmt.Println("\n📊 DISTRIBUIÇÃO POR ENDPOINT:")
 	fmt.Printf("  POST /transacao: %d requisições\n", creates)
 	fmt.Printf("  GET /estatistica: %d requisições\n", statReqs)
